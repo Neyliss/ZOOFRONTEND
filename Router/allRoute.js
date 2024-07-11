@@ -3,7 +3,6 @@ import Route from "./Route.js";
 //Définir ici vos routes
 export const allRoutes = [
     new Route("/", "Accueil", "/pages/home.html"),
-    new Route("/habitat", "La galerie", "/pages/habitat.html", [],),
     new Route("/signin", "Connexion", "/pages/auth/signin.html", ["disconnected"], "/JS/auth/signin.js"),
     new Route("/signup", "Inscription", "/pages/auth/signup.html", ["disconnected"], "/JS/auth/singup.js"),
     new Route("/account", "Mon compte", "/pages/auth/account.html", ["client", "admin"]),
@@ -15,6 +14,7 @@ export const allRoutes = [
     new Route("/jungle", "Jungle", "/pages/Habitation/jungle.html", ["disconnected"],),
     new Route("/marais", "Marais", "/pages/Habitation/marais.html", ["disconnected"],),
     new Route("/sauvage", "Sauvage", "/pages/Habitation/sauvage.html", ["disconnected"],),
+    new Route("/service", "Service", "/pages/service.html", [],),
     
 ];
     

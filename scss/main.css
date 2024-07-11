@@ -12053,4 +12053,11 @@ img {
   display: block;
   color: #292222;
   padding: 10px;
+}
+
+.custom-table img {
+  height: 100px;
+  width: auto;
+  max-width: 100%;
+  position: right;
 }/*# sourceMappingURL=main.css.map */
