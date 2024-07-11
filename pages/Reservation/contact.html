@@ -1,0 +1,49 @@
+<div class="hero-scene text-center text-white">
+    <div class="hero-scene-content">
+        <h1>Contact</h1>
+    </div>
+</div>
+
+<div class="container">
+    <form id="contactForm">
+        <div class="mb-3">
+            <label for="TitreInput" class="form-label">Titre</label>
+            <input type="text" class="form-control" id="TitreInput" name="Titre" placeholder="Le titre de votre demande" title="Titre">
+        </div>
+        
+        <div class="mb-3">
+            <label for="EmailInput" class="form-label">Email</label>
+            <input type="email" class="form-control" id="EmailInput" placeholder="test@mail.fr" name="Email"> 
+            <div class="invalid-feedback">
+                Le mail est incorrect.
+            </div>
+        </div>
+
+        <div class="mb-3">
+            <label for="DescriptionInput" class="form-label">Description</label>
+            <textarea class="form-control" id="DescriptionInput" rows="3"></textarea>
+        </div>
+
+        <div class="text-center">
+            <button type="submit" class="btn btn-primary">Envoyer</button>
+        </div>
+    </form>
+</div>
+
+<!-- Modale de confirmation -->
+<div class="modal fade" id="confirmationModal" tabindex="-1" aria-labelledby="confirmationModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="confirmationModalLabel">Message Envoyé</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                Votre message a bien été envoyé.
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+            </div>
+        </div>
+    </div>
+</div>
