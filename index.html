@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link rel="stylesheet" href="/scss/main.css">
-
+    <link rel="stylesheet" href="/node_modules/bootstrap-icons/font/bootstrap-icons.css">
 
 </head>
 <body>
@@ -13,7 +13,7 @@
         <header>
             <nav class="navbar navbar-expand-lg bg-dark" data-bs-theme="dark">
                 <div class="container-fluid">
-                  <a class="navbar-brand" href="/">Garrage Parrot</a>
+                  <a class="navbar-brand" href="/">Zoo Arcadia<</a>
                   <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                   </button>
@@ -24,6 +24,9 @@
                       </li>
                       <li class="nav-item">
                         <a class="nav-link" href="/habitat">Habitat</a>
+                      </li>
+                      <li class="nav-item">
+                        <a class="nav-link" href="/veterinaire">Veterinaire</a>
                       </li>
                       <li class="nav-item">
                         <a class="nav-link" href="/contact">Contact</a>
@@ -63,20 +66,22 @@
               <p>Du mardi au dimanche  12:00-14:00  18:00-23:00</p>
           </div>
           <div class="col-6 col-lg-4">
-              <p>Garrage Parrot <br/>
+              <p>Zoo Arcadia <br/>
                   5 rue de la route <br/>
                   31150 Ville <br/>
                   04 01 01 01 01 <br/>
               </p>
           </div>
           <div class="col-6 col-lg-4">
-              <p>test</p>
+            <a href="/avis" class="btn btn-primary">Laisser un avis</a>
           </div>
       </div>
   </footer>
   <script src="/JS/script.js"></script>
   <script type="module" src="/Router/router.js"></script>
   <script src="node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+  <!-- Inclure jQuery depuis un CDN -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   
 </body>
 </html>

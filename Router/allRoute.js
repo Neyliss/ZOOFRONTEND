@@ -10,12 +10,14 @@ export const allRoutes = [
     new Route("/allresa", "Vos réservations", "/pages/reservation/allresa.html", ["client"]),
     new Route("/reserver", "Réserver", "/pages/reservation/reserver.html", ["client"]),
     new Route("/contact", "Contact", "/pages/Reservation/contact.html", ["disconnected"], "/JS/Contact/contact.js"),
-    new Route("/habitat", "Habitat", "/pages/habitat.html", [],),
     new Route("/jungle", "Jungle", "/pages/Habitation/jungle.html", ["disconnected"],),
     new Route("/marais", "Marais", "/pages/Habitation/marais.html", ["disconnected"],),
     new Route("/sauvage", "Sauvage", "/pages/Habitation/sauvage.html", ["disconnected"],),
     new Route("/service", "Service", "/pages/service.html", [],),
-    
+    new Route("/habitat", "Habitats", "/pages/habitat.html", [],"/JS/Habitat/habitat.js"),
+    new Route("/veterinaire", "Espace Veterniaire", "/pages/veterinaire.html", [],),
+    new Route("/avis", "Laisser un avis", "/pages/avis.html", [],),
+
 ];
     
 
