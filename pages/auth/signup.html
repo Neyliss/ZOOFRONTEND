@@ -1,45 +1,55 @@
 <div class="hero-scene text-center text-white">
     <div class="hero-scene-content">
-        <h1>Inscription</h1>
+        <h1>Inscription Employé et Vétérinaire</h1>
     </div>
 </div>
 <div class="container">
-    <form>
+    <form id="registrationForm">
         <div class="mb-3">
             <label for="NomInput" class="form-label">Nom</label>
-            <input type="text" class="form-control" id="NomInput" placeholder="Votre nom" name="Nom"> 
+            <input type="text" class="form-control" id="NomInput" placeholder="Votre nom" name="Nom" required> 
         </div>
         <div class="mb-3">
             <label for="PrenomInput" class="form-label">Prénom</label>
-            <input type="text" class="form-control" id="PrenomInput" placeholder="Votre prénom" name="Prenom"> 
+            <input type="text" class="form-control" id="PrenomInput" placeholder="Votre prénom" name="Prenom" required> 
         </div>
         <div class="mb-3">
-          <label for="EmailInput" class="form-label">Email</label>
-          <input type="email" class="form-control" id="EmailInput" placeholder="test@mail.fr" name="Email"> 
-          <div class="invalid-feedback"> 
-            Le mail n'est pas au bon format 
-          </div>
+            <label for="EmailInput" class="form-label">Email</label>
+            <input type="email" class="form-control" id="EmailInput" placeholder="test@mail.fr" name="Email" required> 
+            <div class="invalid-feedback"> 
+                Le mail n'est pas au bon format 
+            </div>
         </div>
         <div class="mb-3">
-          <label for="PasswordInput" class="form-label">Mot de passe</label>
-          <input type="password" class="form-control" id="PasswordInput" name="Password">
-          <div class="invalid-feedback"> 
-            Le mot de passe n'est pas robuste : Au moins 12 caractères comprenant au moins 1 lettre majuscule, 1 minuscule, Il chiffre, et 1 caractère spéciale.
-          </div>
-
-          <div class="valid-feedback"> 
-            Le mot de passe est pas robuste.
-          </div>
+            <label for="PasswordInput" class="form-label">Mot de passe</label>
+            <input type="password" class="form-control" id="PasswordInput" name="Password" required>
+            <div class="invalid-feedback"> 
+           Le mot de passe n'est pas robuste : Au moins 12 caractères comprenant au moins 1 lettre majuscule, 1 minuscule, 1 chiffre, et 1 caractère spécial.
+            </div>
+            <div class="valid-feedback"> 
+                Le mot de passe est robuste.
+            </div>
         </div>
         <div class="mb-3">
             <label for="ValidatePasswordInput" class="form-label">Confirmez votre mot de passe</label>
-            <input type="password" class="form-control" id="ValidatePasswordInput" name="PasswordConfirm">
+            <input type="password" class="form-control" id="ValidatePasswordInput" name="PasswordConfirm" required>
             <div class="invalid-feedback"> 
-              Le mot de passe n'est pas identique.
+                Le mot de passe n'est pas identique.
             </div>
-          </div>
+        </div>
+        <div class="mb-3">
+            <label for="AccountType" class="form-label">Type de compte</label>
+            <select class="form-select" id="AccountType" name="AccountType" required>
+                <option value="" disabled selected>Choisir le type de compte</option>
+                <option value="employee">Employé</option>
+                <option value="veterinarian">Vétérinaire</option>
+            </select>
+            <div class="invalid-feedback"> 
+                Veuillez sélectionner un type de compte.
+            </div>
+        </div>
         <div class="text-center">
-            <button type="submit" class="btn btn-primary" id="btn-validation-inscription">Inscription</button>
+            <button type="submit" class="btn btn-primary" id="btn-validation-inscription" disabled>Inscription</button>
         </div>
     </form>
     <div class="text-center pt-3">

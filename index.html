@@ -13,7 +13,9 @@
         <header>
             <nav class="navbar navbar-expand-lg bg-dark" data-bs-theme="dark">
                 <div class="container-fluid">
-                  <a class="navbar-brand" href="/">Zoo Arcadia<</a>
+                  <a class="navbar-brand ms-auto p-0" href="/">
+                    <img src="/Images/Unknown.jpg" class="rounded" height="60" width="60" alt="Logo du Zoo">
+                </a>
                   <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                   </button>
@@ -25,16 +27,13 @@
                       <li class="nav-item">
                         <a class="nav-link" href="/habitat">Habitat</a>
                       </li>
-                      <li class="nav-item">
+                      <li class="nav-item" data-show="veterinaire">
                         <a class="nav-link" href="/veterinaire">Veterinaire</a>
                       </li>
                       <li class="nav-item">
                         <a class="nav-link" href="/contact">Contact</a>
                       </li>
-                      <li class="nav-item" data-show="client">
-                        <a class="nav-link" href="/allresa">Les réservations</a>
-                      </li>
-                      <li class="nav-item">
+                      <li class="nav-item" data-show="connected">
                         <a class="nav-link" href="/account">Mon compte</a>
                       </li>
                       <li class="nav-item">
@@ -80,6 +79,8 @@
   <script src="/JS/script.js"></script>
   <script type="module" src="/Router/router.js"></script>
   <script src="node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.11.7/umd/popper.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>
   <!-- Inclure jQuery depuis un CDN -->
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   

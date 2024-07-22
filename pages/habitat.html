@@ -1,102 +1,107 @@
+
 <div class="hero-scene text-center text-white">
-  <div class="hero-scene-content">
-      <h1>Habitats</h1>
-  </div>
+    <div class="hero-scene-content">
+        <h1>Habitats</h1>
+    </div>
 </div>
 
-<div class="container">
-  <div class="text-center" data-show="admin">
-      <button type="button" data-bs-toggle="modal" data-bs-target="#editionPhotoModal" class="btn btn-primary">Ajouter des photos</button>
-  </div>
-  <div class="row row-cols-2 row-cols-lg-3">
-      <div class="col p-3">
-          <div class="image-card text-white">
-              <a href="/sauvage">
-                  <img src="../images/Sauvage.jpeg" class="rounded w-100" width="400" height="300" />
-                  <p class="titre-image">SAUVAGE</p>
-              </a>
-              <div class="action-image-buttons" data-show="admin">
-                  <button type="button" class="btn btn-outline-light" data-bs-toggle="modal" data-bs-target="#editionPhotoModal"><i class="bi bi-pencil-square"></i></button>
-                  <button type="button" class="btn btn-outline-light" data-bs-toggle="modal" data-bs-target="#deletePhotoModal"><i class="bi bi-trash"></i></button>
-              </div>
-          </div>
-      </div>
+<div class="container" id="habitatsContainer">
+    <div class="text-center" data-show="admin">
+        <button type="button" data-bs-toggle="modal" data-bs-target="#editionPhotoModal" class="btn btn-primary">Ajouter des photos</button>
+    </div>
+    <div class="row row-cols-2 row-cols-lg-3">
+        <div class="col p-3">
+            <div class="image-card text-white">
+                <a href="/savane">
+                    <img src="../images/Sauvage.jpeg" class="rounded w-100" width="400" height="300" />
+                    <p class="titre-image">SAVANE</p>
+                </a>
+                <div class="action-image-buttons" data-show="admin">
+                    <button type="button" class="btn btn-outline-light" data-bs-toggle="modal" data-bs-target="#editionPhotoModal"><i class="bi bi-pencil-square"></i></button>
+                    <button type="button" class="btn btn-outline-light" data-bs-toggle="modal" data-bs-target="#deletePhotoModal"><i class="bi bi-trash"></i></button>
+                </div>
+            </div>
+            <p> Vaste plaine herbeuse avec des arbres dispersés, où vivent des animaux comme les lions, les éléphants, les girafes et les zèbres.</p>
+        </div>
 
-      <div class="col p-3">
-          <div class="image-card text-white">
-              <a href="/marais">
-                  <img src="../images/Marais.jpeg" class="rounded w-100" width="400" height="300" />
-                  <p class="titre-image">MARAIS</p>
-              </a>
-              <div class="action-image-buttons" data-show="admin">
-                  <button type="button" class="btn btn-outline-light" data-bs-toggle="modal" data-bs-target="#editionPhotoModal"><i class="bi bi-pencil-square"></i></button>
-                  <button type="button" class="btn btn-outline-light" data-bs-toggle="modal" data-bs-target="#deletePhotoModal"><i class="bi bi-trash"></i></button>
-              </div>
-          </div>
-      </div>
+        <div class="col p-3">
+            <div class="image-card text-white">
+                <a href="/marais">
+                    <img src="../images/Marais.jpeg" class="rounded w-100" width="400" height="300" />
+                    <p class="titre-image">MARAIS</p>
+                </a>
+                <div class="action-image-buttons" data-show="admin">
+                    <button type="button" class="btn btn-outline-light" data-bs-toggle="modal" data-bs-target="#editionPhotoModal"><i class="bi bi-pencil-square"></i></button>
+                    <button type="button" class="btn btn-outline-light" data-bs-toggle="modal" data-bs-target="#deletePhotoModal"><i class="bi bi-trash"></i></button>
+                </div>
+            </div>
+            <p>Habitat humide et marécageux, abritant des animaux comme les crocodiles, les tortues et les grenouilles, ainsi que diverses espèces d'oiseaux aquatiques.</p>
+        </div>
 
-      <div class="col p-3">
-          <div class="image-card text-white">
-              <a href="/jungle">
-                  <img src="../images/Jungle.jpeg" class="rounded w-100" width="400" height="300" />
-                  <p class="titre-image">JUNGLE</p>
-              </a>
-              <div class="action-image-buttons" data-show="admin">
-                  <button type="button" class="btn btn-outline-light" data-bs-toggle="modal" data-bs-target="#editionPhotoModal"><i class="bi bi-pencil-square"></i></button>
-                  <button type="button" class="btn btn-outline-light" data-bs-toggle="modal" data-bs-target="#deletePhotoModal"><i class="bi bi-trash"></i></button>
-              </div>
-          </div>
-      </div>
-  </div>
+        <div class="col p-3">
+            <div class="image-card text-white">
+                <a href="/jungle">
+                    <img src="../images/Jungle.jpeg" class="rounded w-100" width="400" height="300" />
+                    <p class="titre-image">JUNGLE</p>
+                </a>
+                <div class="action-image-buttons" data-show="admin">
+                    <button type="button" class="btn btn-outline-light" data-bs-toggle="modal" data-bs-target="#editionPhotoModal"><i class="bi bi-pencil-square"></i></button>
+                    <button type="button" class="btn btn-outline-light" data-bs-toggle="modal" data-bs-target="#deletePhotoModal"><i class="bi bi-trash"></i></button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <p> Forêt dense et tropicale, riche en biodiversité, hébergeant des animaux tels que les singes, les tigres, les serpents et de nombreux oiseaux exotiques.</p>
 </div>
 
 <!-- Modal edition -->
 <div class="modal fade" id="editionPhotoModal" tabindex="-1" aria-labelledby="editionPhotoModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-      <div class="modal-content">
-          <div class="modal-header">
-              <h2 class="modal-title fs-5" id="editionPhotoModalLabel">Edition Photo</h2>
-              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-          </div>
-          <div class="modal-body">
-              <form>
-                  <div class="mb-3">
-                      <label for="editionPhotoTitleInput" class="form-label">Titre</label>
-                      <input type="text" class="form-control" id="editionPhotoTitleInput" placeholder="Titre de la photo" name="Titre">
-                  </div>
-                  <div class="mb-3">
-                      <label for="editionPhotoImageInput" class="form-label">Image</label>
-                      <input type="file" class="form-control" id="editionPhotoImageInput" name="Image">
-                  </div>
-                  <div class="text-center">
-                      <button type="button" class="btn btn-primary" id="editionPhotoSaveButton">Enregistrer</button>
-                  </div>
-              </form>
-          </div>
-      </div>
-  </div>
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title fs-5" id="editionPhotoModalLabel">Edition Photo</h2>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="mb-3">
+                        <label for="editionPhotoTitleInput" class="form-label">Titre</label>
+                        <input type="text" class="form-control" id="editionPhotoTitleInput" placeholder="Titre de la photo" name="Titre">
+                    </div>
+                    <div class="mb-3">
+                        <label for="editionPhotoImageInput" class="form-label">Image</label>
+                        <input type="file" class="form-control" id="editionPhotoImageInput" name="Image">
+                    </div>
+                    <div class="text-center">
+                        <button type="button" class="btn btn-primary" id="editionPhotoSaveButton">Enregistrer</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
 </div>
 
 <!-- Modal de suppression -->
 <div class="modal fade" id="deletePhotoModal" tabindex="-1" aria-labelledby="deletePhotoModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-      <div class="modal-content">
-          <div class="modal-header">
-              <h2 class="modal-title fs-5" id="deletePhotoModalLabel">Êtes-vous sûr de vouloir supprimer cette photo?</h2>
-              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-          </div>
-          <div class="modal-body">
-              <form>
-                  <div class="mb-3">
-                      <p id="deletePhotoTitle">Titre de la photo</p>
-                      <img id="deletePhotoImage" src="../images/Projet.jpeg" class="rounded w-100" />
-                  </div>
-                  <div class="text-center">
-                      <button type="button" class="btn btn-danger" id="deletePhotoButton">Supprimer</button>
-                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
-                  </div>
-              </form>
-          </div>
-      </div>
-  </div>
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title fs-5" id="deletePhotoModalLabel">Êtes-vous sûr de vouloir supprimer cette photo?</h2>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="mb-3">
+                        <p id="deletePhotoTitle">Titre de la photo</p>
+                        <img id="deletePhotoImage" src="" class="rounded w-100" />
+                    </div>
+                    <div class="text-center">
+                        <button type="button" class="btn btn-danger" id="deletePhotoButton">Supprimer</button>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
 </div>
+
