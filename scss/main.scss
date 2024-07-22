@@ -105,33 +105,24 @@ html{
   }
   
 
-  
-  .rating {
-      unicode-bidi: bidi-override;
-      direction: rtl;
-      text-align: left;
-  }
-  .rating > label {
-      display: inline-block;
-      position: relative;
-      width: 1.1em;
-      font-size: 2.5em;
-      color: #ccc;
-      cursor: pointer;
-  }
-  .rating > label:hover,
-  .rating > label:hover ~ label,
-  .rating > input:checked ~ label {
-      color: orange;
-  }
-  .rating > input:checked ~ label:hover,
-  .rating > input:checked ~ label:hover ~ label {
-      color: #ccc;
-  }
-  .rating > input {
-      display: none;
-  }
-  .rating > label:before {
-      content: "\2605";
-      position: absolute;
-  }
+
+
+  .star-rating {
+    direction: rtl;
+    display: inline-flex;
+    font-size: 2rem;
+}
+.star-rating input[type="radio"] {
+    display: none;
+}
+.star-rating label {
+    color: #ddd;
+    cursor: pointer;
+}
+.star-rating input[type="radio"]:checked ~ label {
+    color: #ffc107;
+}
+.star-rating label:hover,
+.star-rating label:hover ~ label {
+    color: #ffc107;
+}

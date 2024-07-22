@@ -10,16 +10,13 @@ export const allRoutes = [
     new Route("/allresa", "Vos réservations", "/pages/reservation/allresa.html", ["client"]),
     new Route("/reserver", "Réserver", "/pages/reservation/reserver.html", ["client"]),
     new Route("/contact", "Contact", "/pages/Reservation/contact.html", ["disconnected"], "/JS/Contact/contact.js"),
-    new Route("/jungle", "Jungle", "/pages/Habitation/jungle.html", ["disconnected"],"/JS/Habitat/animal.js"),
+    new Route("/jungle", "Jungle", "/pages/Habitation/jungle.html", ["disconnected"], "/JS/Habitat/animal.js"),
     new Route("/marais", "Marais", "/pages/Habitation/marais.html", ["disconnected"], "/JS/Habitat/animal.js"),
     new Route("/savane", "Savane", "/pages/Habitation/savane.html", ["disconnected"], "/JS/Habitat/animal.js"),
-    new Route("/service", "Service", "/pages/service.html", [],),
-    new Route("/habitat", "Habitats", "/pages/habitat.html", [],"/JS/Habitat/habitat.js"),
-    new Route("/veterinaire", "Espace Veterniaire", "/pages/veterinaire.html", [],),
-    new Route("/avis", "Laisser un avis", "/pages/avis.html", [], "/JS/avis.js"),
-
+    new Route("/service", "Service", "/pages/service.html", []),
+    new Route("/habitat", "Habitats", "/pages/habitat.html", [], "/JS/Habitat/habitat.js"),
+    new Route("/veterinaire", "Espace Veterniaire", "/pages/veterinaire.html", ["veterinaire"], "/JS/veto/veterinaire.js"),
+    new Route("/avis", "Laisser un avis", "/pages/avis.html", [], "/JS/avis/avis.js"),
 ];
-    
-
 //Le titre s'affiche comme ceci : Route.titre - websitename
 export const websiteName = "ZOO";
