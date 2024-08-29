@@ -6,10 +6,10 @@ const btnSubmit = document.querySelector("button[type='submit']");
 const contactForm = document.getElementById("contactForm");
 const confirmationModal = new bootstrap.Modal(document.getElementById('confirmationModal'));
 
-// Ajout d'un écouteur d'événement au keyup pour validation en temps réel
-inputTitre.addEventListener("keyup", validateForm);
-inputEmail.addEventListener("keyup", validateForm);
-inputDescription.addEventListener("keyup", validateForm);
+// Ajout d'un écouteur d'événement au input pour validation en temps réel
+inputTitre.addEventListener("input", validateForm);
+inputEmail.addEventListener("input", validateForm);
+inputDescription.addEventListener("input", validateForm);
 
 // Fonction permettant de valider tout le formulaire
 function validateForm() {
@@ -27,7 +27,7 @@ function validateMail(input) {
     // Définir mon regex
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     const mailUser = input.value;
-    if (mailUser.match(emailRegex)) {
+    if (emailRegex.test(mailUser)) {
         input.classList.add("is-valid");
         input.classList.remove("is-invalid");
         return true;
@@ -57,11 +57,35 @@ document.addEventListener("DOMContentLoaded", function() {
 });
 
 // Ajout d'un écouteur d'événement pour la soumission du formulaire
-contactForm.addEventListener("submit", function(event) {
+contactForm.addEventListener("submit", async function(event) {
     event.preventDefault(); // Empêcher la soumission réelle du formulaire
-    confirmationModal.show(); // Afficher la modale de confirmation
-    
-    confirmationModal._element.addEventListener('hidden.bs.modal', function () {
-        window.location.href = '/'; // Remplacer par l'URL de la page d'accueil
-    }, { once: true });
+
+    const formData = {
+        Titre: inputTitre.value.trim(),
+        Email: inputEmail.value.trim(),
+        Description: inputDescription.value.trim(),
+    };
+
+    try {
+        const response = await fetch('http://localhost:8000/api/contact', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(formData),
+        });
+
+        const result = await response.json();
+
+        if (response.ok) {
+            confirmationModal.show(); // Afficher la modale de confirmation
+            confirmationModal._element.addEventListener('hidden.bs.modal', function () {
+                window.location.href = '/'; // Remplacer par l'URL de la page d'accueil
+            }, { once: true });
+        } else {
+            console.error('Erreur:', result.errors);
+        }
+    } catch (error) {
+        console.error('Erreur:', error);
+    }
 });

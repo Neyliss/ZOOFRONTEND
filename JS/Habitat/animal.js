@@ -1,28 +1,38 @@
-document.addEventListener('DOMContentLoaded', function () {
-    let counts = {
-        collapseOne: 0,
-        collapseTwo: 0,
-        collapseThree: 0
-    };
-
-    document.querySelectorAll('[data-bs-toggle="collapse"]').forEach(function (collapseLink) {
-        collapseLink.addEventListener('click', function (event) {
-            event.preventDefault(); // Empêche l'action par défaut du lien
-
-            let targetId = collapseLink.getAttribute('href').slice(1); // Récupère l'ID cible sans le '#'
-
-            counts[targetId]++; // Incrémente le compteur pour l'ID cible
-
-            console.log('Target ID:', targetId); // Pour le débogage : vérifie l'ID cible
-            console.log('Counts:', counts); // Pour le débogage : vérifie l'objet counts
-
-            let counterElement = document.getElementById('counter' + targetId.charAt(targetId.length - 1));
-            if (counterElement) {
-                counterElement.textContent = counts[targetId]; // Met à jour l'affichage du compteur
-            } else {
-                console.error('Counter element not found for', targetId); // Pour le débogage : vérifie si l'élément du compteur est trouvé
-            }
+$(document).ready(function() {
+    // Récupérer les données des animaux depuis l'API
+    $.get('/api/animals', function(data) {
+        data.forEach(function(animal) {
+            var animalCard = $('.animal-card[data-animal="' + animal.name + '"]');
+            animalCard.data('id', animal.id);
+            animalCard.data('prenom', animal.prenom);
+            animalCard.data('race', animal.race);
+            animalCard.data('habitat', animal.habitat);
+            animalCard.data('image', animal.image);
         });
     });
-});
 
+    $('.animal-card').click(function() {
+        var animalId = $(this).data('id');
+        var animal = $(this).data('animal');
+        var prenom = $(this).data('prenom');
+        var race = $(this).data('race');
+        var habitat = $(this).data('habitat');
+        var image = $(this).data('image');
+
+        // Mise à jour du contenu du modal
+        $('#animalModalLabel').text(animal);
+        $('#animalModalPrenom').text(prenom);
+        $('#animalModalRace').text(race);
+        $('#animalModalHabitat').text(habitat);
+        $('#animalModalImage').attr('src', image);
+
+        // Mise à jour du compteur de vues via l'API
+        $.post('/api/animals/' + animalId + '/increment-view', function() {
+            var currentViews = parseInt($('#animalModalViews').text()) || 0;
+            $('#animalModalViews').text(currentViews + 1);
+        });
+
+        // Affichage du modal
+        $('#animalModal').modal('show');
+    });
+});

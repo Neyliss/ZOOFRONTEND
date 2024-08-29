@@ -11976,7 +11976,7 @@ main {
 }
 
 footer.footer {
-  padding: 15px;
+  padding: 5px;
   position: absolute;
   bottom: 0;
   width: 100%;
@@ -12079,4 +12079,59 @@ img {
 .star-rating label:hover,
 .star-rating label:hover ~ label {
   color: #ffc107;
+}
+
+.card {
+  height: center;
+}
+
+.card img {
+  -o-object-fit: cover;
+     object-fit: cover;
+  height: 500px;
+}
+
+/* Tableau */
+.table {
+  border-collapse: collapse;
+  width: 100%;
+  margin-bottom: 20px;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+}
+
+.table th,
+.table td {
+  padding: 15px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+.table th {
+  background-color: #f2f2f2;
+  font-weight: bold;
+}
+
+/* Alternance de couleurs pour les lignes */
+.table tbody tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+/* Effet de survol sur les lignes */
+.table tbody tr:hover {
+  background-color: #e0e0e0;
+  cursor: pointer;
+}
+
+/* Thème zoologique (ajustez les couleurs selon vos préférences) */
+.table thead th {
+  background-color: #3B8A3E; /* Vert pour la nature */
+  color: white;
+}
+
+.table tbody tr:nth-child(even) {
+  background-color: #e8f5e9; /* Vert plus clair */
+}
+
+.table tbody tr:hover {
+  background-color: #d8f3dc; /* Vert encore plus clair */
 }/*# sourceMappingURL=main.css.map */

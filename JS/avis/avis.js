@@ -1,4 +1,3 @@
-
 // Récupérer les éléments côté front end par leur ID
 const inputPseudo = document.getElementById("pseudo");
 const inputAvis = document.getElementById("avis");
@@ -61,12 +60,36 @@ document.addEventListener("DOMContentLoaded", function() {
 // Ajout d'un écouteur d'événement pour la soumission du formulaire
 reviewForm.addEventListener("submit", function(event) {
     event.preventDefault(); // Empêcher la soumission réelle du formulaire
-    confirmationModal.show(); // Afficher la modale de confirmation
-    
+
+    // Construire les données à envoyer
+    const reviewData = {
+        pseudo: inputPseudo.value,
+        avis: inputAvis.value,
+        rating: Array.from(ratingInputs).find(input => input.checked).value
+    };
+
+    // Envoyer les données au backend via une requête POST
+    fetch('/api/review', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(reviewData)
+    })
+    .then(response => {
+        if (response.ok) {
+            confirmationModal.show(); // Afficher la modale de confirmation
+        } else {
+            return response.json().then(data => {
+                // Afficher les erreurs si la réponse n'est pas correcte
+                console.error('Error:', data.errors);
+            });
+        }
+    })
+    .catch(error => console.error('Fetch error:', error));
+
+    // Redirection après la fermeture de la modale
     confirmationModal._element.addEventListener('hidden.bs.modal', function () {
         window.location.href = '/'; // Remplacer par l'URL de la page d'accueil
     }, { once: true });
 });
-
-
-

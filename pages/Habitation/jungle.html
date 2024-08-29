@@ -1,86 +1,60 @@
+
 <div class="hero-scene text-center text-white">
     <div class="hero-scene-content">
         <h1>La Jungle</h1>
     </div>
 </div>
-
-
-
 <div class="container mt-3">
-    <h2 class="text-center">Les animaux de l'habitat Savane </h2>
-    <p class="text-center"> Forêt dense et tropicale, riche en biodiversité, hébergeant des animaux tels que les singes, les tigres, les serpents et de nombreux oiseaux exotiques.</p>
-    <div id="accordion">
-      <div class="card">
-        <div class="card-header">
-          <a class="btn" data-bs-toggle="collapse" href="#collapseOne">
-            Click pour découvrir cet animal 
-          </a>
+    <h2 class="text-center">Les animaux de l'habitat Jungle</h2>
+    <p class="text-center">Forêt dense et tropicale, riche en biodiversité, hébergeant des animaux tels que les singes, les tigres, les serpents et de nombreux oiseaux exotiques.</p>
+    <div id="animal-cards" class="row">
+        <div class="col-md-4 mb-4">
+            <div class="card animal-card" data-animal="Jaguar" data-prenom="Stone" data-race="Félin" data-habitat="Jungle" data-image="/Images/jaguar.jpeg">
+                <img src="/Images/jaguar.jpeg" class="card-img-top" alt="Jaguar">
+                <div class="card-body">
+                    <h5 class="card-title">Jaguar</h5>
+                </div>
+            </div>
         </div>
-        <div id="collapseOne" class="collapse show" data-bs-parent="#accordion">
-          <div class="card-body">
-            <div class="card" style="width:400px">
-              <img class="card-img-top" src="/Images/jaguar.jpeg" alt="Card image">
-              <div class="card-body">
-                <ul class="list-group list-group-flush">
-                  <li class="list-group-item"> <strong> Prénom : </strong>Stone</li>
-                  <li class="list-group-item"> <strong> Race :</strong> Félin</li>
-                  <li class="list-group-item"> <strong> Habitat :</strong> Jungle</li>
-                </ul>
-              </div>
-            </div>         
+        <div class="col-md-4 mb-4">
+            <div class="card animal-card" data-animal="Perroquet" data-prenom="Phoenix" data-race="Oiseau" data-habitat="Jungle" data-image="/Images/Perroquet.jpeg">
+                <img src="/Images/Perroquet.jpeg" class="card-img-top" alt="Perroquet">
+                <div class="card-body">
+                    <h5 class="card-title">Perroquet</h5>
+                </div>
+            </div>
         </div>
+        <div class="col-md-4 mb-4">
+            <div class="card animal-card" data-animal="Orang-outan" data-prenom="Cesar" data-race="Primate" data-habitat="Jungle" data-image="/Images/Oran.jpeg">
+                <img src="/Images/Oran.jpeg" class="card-img-top" alt="Orang-outan">
+                <div class="card-body">
+                    <h5 class="card-title">Orang-outan</h5>
+                </div>
+            </div>
+        </div>
+    </div>
+    <br>
+    <div class="d-flex justify-content-center">
+        <a href="/habitat" class="btn btn-primary">Habitat</a>
+    </div>
+</div>
+
+<div class="modal fade" id="animalModal" tabindex="-1" aria-labelledby="animalModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="animalModalLabel"></h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
-
-
-
-
-      <div class="card">
-        <div class="card-header">
-          <a class="collapsed btn" data-bs-toggle="collapse" href="#collapseTwo">
-            Click pour découvrir cet animal 
-        </a>
-        </div>
-        <div id="collapseTwo" class="collapse" data-bs-parent="#accordion">
-          <div class="card-body">
-            <div class="card" style="width:400px">
-              <img class="card-img-top" src="/Images/Perroquet.jpeg" alt="Card image">
-              <div class="card-body">
-                <ul class="list-group list-group-flush">
-                  <li class="list-group-item"> <strong> Prénom : </strong>: Phoenix</li>
-                  <li class="list-group-item"> <strong> Race :</strong> Oiseau</li>
-                  <li class="list-group-item"> <strong> Habitat :</strong> Jungle</li>
-                </ul>
-              </div>
-          </div>
-        </div>
-      </div>
-
-
-      <div class="card">
-        <div class="card-header">
-          <a class="collapsed btn" data-bs-toggle="collapse" href="#collapseThree">
-            Click pour découvrir cet animal 
-          </a>
-        </div>
-        <div id="collapseThree" class="collapse" data-bs-parent="#accordion">
-          <div class="card-body">
-                        <div class="card" style="width:400px">
-              <img class="card-img-top" src="/Images/Oran.jpeg" alt="Card image">
-              <div class="card-body">
-                <ul class="list-group list-group-flush">
-                  <li class="list-group-item"> <strong> Prénom : </strong>: Cesar </li>
-                  <li class="list-group-item"> <strong> Race :</strong> Primate</li>
-                  <li class="list-group-item"> <strong> Habitat :</strong> Jungle </li>
-                </ul>
-              </div>
-          </div>
-        </div>
+      <div class="modal-body">
+        <img src="" id="animalModalImage" class="img-fluid" alt="">
+        <ul class="list-group list-group-flush mt-3">
+            <li class="list-group-item"><strong>Prénom :</strong> <span id="animalModalPrenom"></span></li>
+            <li class="list-group-item"><strong>Race :</strong> <span id="animalModalRace"></span></li>
+            <li class="list-group-item"><strong>Habitat :</strong> <span id="animalModalHabitat"></span></li>
+        </ul>
       </div>
     </div>
   </div>
+</div>
 
-  <br>
-  <br>
-  <div class="d-flex justify-content-center">
-      <a href="/habitat" class="btn btn-primary">Habitat</a>
-  </div>      

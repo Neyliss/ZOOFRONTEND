@@ -1,135 +1,219 @@
-document.addEventListener('DOMContentLoaded', (event) => {
+document.addEventListener('DOMContentLoaded', () => {
     let selectedPhotoCard = null;
 
     // Initialiser toutes les modales à l'aide de Bootstrap
-    var modals = document.querySelectorAll('.modal');
-    modals.forEach((modal) => {
+    document.querySelectorAll('.modal').forEach(modal => {
         new bootstrap.Modal(modal);
     });
 
-    // Gérer le clic sur le bouton d'édition
-    document.querySelectorAll('.action-image-buttons .btn-outline-light[data-bs-target="#editionPhotoModal"]').forEach(button => {
-        button.addEventListener('click', (event) => {
-            const imageCard = button.closest('.image-card');
-            const imageTitle = imageCard.querySelector('.titre-image').textContent;
+    // Charger les habitats depuis le serveur
+    fetch('/api/habitats')
+        .then(response => {
+            if (!response.ok) throw new Error('Erreur lors du chargement des habitats.');
+            return response.json();
+        })
+        .then(data => {
+            const container = document.querySelector('#habitatsContainer .row');
+            data.forEach(habitat => {
+                const newCard = createPhotoCard(habitat.name, habitat.image_path, habitat.id);
+                container.appendChild(newCard);
+            });
+        })
+        .catch(error => {
+            console.error('Erreur:', error);
+            alert('Impossible de charger les habitats.');
+        });
 
-            selectedPhotoCard = imageCard;
+    // Gestion du clic sur le bouton d'édition ou de suppression
+    document.getElementById('habitatsContainer').addEventListener('click', event => {
+        const button = event.target.closest('.btn-outline-light');
+        if (!button) return;
 
+        const imageCard = button.closest('.image-card');
+        const habitatId = imageCard.dataset.habitatId;
+        selectedPhotoCard = imageCard;
+
+        if (button.dataset.bsTarget === '#editionPhotoModal') {
             // Remplir la modal d'édition avec les informations de l'image
-            const modal = document.getElementById('editionPhotoModal');
-            modal.querySelector('#editionPhotoTitleInput').value = imageTitle;
-            // Réinitialiser le champ de fichier pour une nouvelle édition
-            modal.querySelector('#editionPhotoImageInput').value = '';
-        });
-    });
-
-    // Gérer le clic sur le bouton de suppression
-    document.querySelectorAll('.action-image-buttons .btn-outline-light[data-bs-target="#deletePhotoModal"]').forEach(button => {
-        button.addEventListener('click', (event) => {
-            const imageCard = button.closest('.image-card');
-            const imageTitle = imageCard.querySelector('.titre-image').textContent;
-            const imageSrc = imageCard.querySelector('img').src;
-
-            selectedPhotoCard = imageCard;
-
+            const title = imageCard.querySelector('.titre-image').textContent;
+            document.getElementById('editionPhotoTitleInput').value = title;
+            document.getElementById('editionPhotoImageInput').value = '';
+        } else if (button.dataset.bsTarget === '#deletePhotoModal') {
             // Remplir la modal de suppression avec les informations de l'image
-            const modal = document.getElementById('deletePhotoModal');
-            modal.querySelector('#deletePhotoTitle').textContent = imageTitle;
-            modal.querySelector('#deletePhotoImage').src = imageSrc;
-        });
+            const title = imageCard.querySelector('.titre-image').textContent;
+            const imageUrl = imageCard.querySelector('img').src;
+            document.getElementById('deletePhotoTitle').textContent = title;
+            document.getElementById('deletePhotoImage').src = imageUrl;
+        }
     });
 
     // Gérer l'enregistrement d'une photo
-    document.getElementById('editionPhotoSaveButton').addEventListener('click', (event) => {
-        const titleInput = document.getElementById('editionPhotoTitleInput').value;
+    document.getElementById('editionPhotoSaveButton').addEventListener('click', () => {
+        const titleInput = document.getElementById('editionPhotoTitleInput').value.trim();
         const imageInput = document.getElementById('editionPhotoImageInput').files[0];
 
-        if (titleInput && imageInput) {
+        if (!titleInput) {
+            alert('Le titre est requis.');
+            return;
+        }
+
+        if (imageInput) {
             const reader = new FileReader();
             reader.onload = function(e) {
+                const imageData = e.target.result;
+
                 if (selectedPhotoCard) {
-                    selectedPhotoCard.querySelector('.titre-image').textContent = titleInput;
-                    selectedPhotoCard.querySelector('img').src = e.target.result;
+                    updatePhotoCard(selectedPhotoCard, titleInput, imageData);
+                    updateHabitat(selectedPhotoCard.dataset.habitatId, titleInput, imageData);
                 } else {
-                    const newCard = createPhotoCard(titleInput, e.target.result);
-                    document.getElementById('habitatsContainer').appendChild(newCard);
+                    createNewHabitat(titleInput, imageData);
                 }
                 resetEditionModal();
             };
             reader.readAsDataURL(imageInput);
-        } else if (selectedPhotoCard && titleInput) {
-            selectedPhotoCard.querySelector('.titre-image').textContent = titleInput;
+        } else if (selectedPhotoCard) {
+            updatePhotoCard(selectedPhotoCard, titleInput);
+            updateHabitat(selectedPhotoCard.dataset.habitatId, titleInput);
             resetEditionModal();
         }
     });
 
     // Gérer la suppression d'une photo
-    document.getElementById('deletePhotoButton').addEventListener('click', (event) => {
+    document.getElementById('deletePhotoButton').addEventListener('click', () => {
         if (selectedPhotoCard) {
-            selectedPhotoCard.parentNode.removeChild(selectedPhotoCard);
-            selectedPhotoCard = null;
-            resetDeleteModal();
+            const habitatId = selectedPhotoCard.dataset.habitatId;
+            deleteHabitat(habitatId).then(() => {
+                selectedPhotoCard.remove();
+                resetDeleteModal();
+            }).catch(error => {
+                console.error('Erreur:', error);
+                alert('Impossible de supprimer la photo.');
+            });
         }
     });
 
-    function createPhotoCard(title, imgSrc) {
-        const colDiv = document.createElement('div');
-        colDiv.className = 'col p-3';
-        colDiv.innerHTML = `
-            <div class="image-card text-white">
-                <a href="#">
-                    <img src="${imgSrc}" class="rounded w-100" width="400" height="300" />
-                    <p class="titre-image">${title}</p>
-                </a>
-                <div class="action-image-buttons" data-show="admin">
-                    <button type="button" class="btn btn-outline-light" data-bs-toggle="modal" data-bs-target="#editionPhotoModal"><i class="bi bi-pencil-square"></i></button>
-                    <button type="button" class="btn btn-outline-light" data-bs-toggle="modal" data-bs-target="#deletePhotoModal"><i class="bi bi-trash"></i></button>
-                </div>
-            </div>
-        `;
-        // Ajouter les écouteurs d'événements pour les nouveaux boutons
-        colDiv.querySelector('.btn-outline-light[data-bs-target="#editionPhotoModal"]').addEventListener('click', (event) => {
-            const imageCard = colDiv.querySelector('.image-card');
-            const imageTitle = imageCard.querySelector('.titre-image').textContent;
+    // Créer une nouvelle carte photo
+    function createPhotoCard(title, imageUrl, habitatId) {
+        const col = document.createElement('div');
+        col.className = 'col p-3';
 
-            selectedPhotoCard = imageCard;
+        const card = document.createElement('div');
+        card.className = 'image-card text-white';
+        card.dataset.habitatId = habitatId;
 
-            // Remplir la modal d'édition avec les informations de l'image
-            const modal = document.getElementById('editionPhotoModal');
-            modal.querySelector('#editionPhotoTitleInput').value = imageTitle;
-            // Réinitialiser le champ de fichier pour une nouvelle édition
-            modal.querySelector('#editionPhotoImageInput').value = '';
-        });
+        const link = document.createElement('a');
+        link.href = '#';
 
-        colDiv.querySelector('.btn-outline-light[data-bs-target="#deletePhotoModal"]').addEventListener('click', (event) => {
-            const imageCard = colDiv.querySelector('.image-card');
-            const imageTitle = imageCard.querySelector('.titre-image').textContent;
-            const imageSrc = imageCard.querySelector('img').src;
+        const img = document.createElement('img');
+        img.src = imageUrl;
+        img.className = 'rounded w-100';
+        img.width = 400;
+        img.height = 300;
 
-            selectedPhotoCard = imageCard;
+        const p = document.createElement('p');
+        p.className = 'titre-image';
+        p.textContent = title;
 
-            // Remplir la modal de suppression avec les informations de l'image
-            const modal = document.getElementById('deletePhotoModal');
-            modal.querySelector('#deletePhotoTitle').textContent = imageTitle;
-            modal.querySelector('#deletePhotoImage').src = imageSrc;
-        });
+        const actions = document.createElement('div');
+        actions.className = 'action-image-buttons';
+        actions.dataset.show = 'admin';
 
-        return colDiv;
+        const editButton = document.createElement('button');
+        editButton.className = 'btn btn-outline-light';
+        editButton.dataset.bsToggle = 'modal';
+        editButton.dataset.bsTarget = '#editionPhotoModal';
+        editButton.innerHTML = '<i class="bi bi-pencil-square"></i>';
+
+        const deleteButton = document.createElement('button');
+        deleteButton.className = 'btn btn-outline-light';
+        deleteButton.dataset.bsToggle = 'modal';
+        deleteButton.dataset.bsTarget = '#deletePhotoModal';
+        deleteButton.innerHTML = '<i class="bi bi-trash"></i>';
+
+        actions.appendChild(editButton);
+        actions.appendChild(deleteButton);
+
+        link.appendChild(img);
+        link.appendChild(p);
+
+        card.appendChild(link);
+        card.appendChild(actions);
+
+        col.appendChild(card);
+
+        return col;
     }
 
+    // Mettre à jour une carte photo existante
+    function updatePhotoCard(card, title, imageUrl = null) {
+        card.querySelector('.titre-image').textContent = title;
+        if (imageUrl) {
+            card.querySelector('img').src = imageUrl;
+        }
+    }
+
+    // Créer un nouvel habitat via l'API
+    function createNewHabitat(title, imageData) {
+        fetch('/api/habitats', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                name: title,
+                image_path: imageData
+            })
+        }).then(response => response.json())
+          .then(data => {
+              const newCard = createPhotoCard(title, imageData, data.id);
+              document.querySelector('#habitatsContainer .row').appendChild(newCard);
+          }).catch(error => {
+              console.error('Erreur:', error);
+              alert('Impossible de créer l\'habitat.');
+          });
+    }
+
+    // Mettre à jour un habitat via l'API
+    function updateHabitat(id, title, imageData = null) {
+        const body = { name: title };
+        if (imageData) {
+            body.image_path = imageData;
+        }
+
+        fetch(`/api/habitats/${id}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(body)
+        }).catch(error => {
+            console.error('Erreur:', error);
+            alert('Impossible de mettre à jour l\'habitat.');
+        });
+    }
+
+    // Supprimer un habitat via l'API
+    function deleteHabitat(id) {
+        return fetch(`/api/habitats/${id}`, {
+            method: 'DELETE'
+        }).then(response => {
+            if (!response.ok) throw new Error('Erreur lors de la suppression de l\'habitat.');
+        });
+    }
+
+    // Réinitialiser la modal d'édition
     function resetEditionModal() {
-        document.getElementById('editionPhotoTitleInput').value = '';
-        document.getElementById('editionPhotoImageInput').value = '';
         selectedPhotoCard = null;
-        const editionPhotoModal = bootstrap.Modal.getInstance(document.getElementById('editionPhotoModal'));
-        editionPhotoModal.hide();
+        const modal = document.getElementById('editionPhotoModal');
+        const bsModal = bootstrap.Modal.getInstance(modal);
+        bsModal.hide();
     }
 
+    // Réinitialiser la modal de suppression
     function resetDeleteModal() {
-        document.getElementById('deletePhotoTitle').innerText = '';
-        document.getElementById('deletePhotoImage').src = '';
         selectedPhotoCard = null;
-        const deletePhotoModal = bootstrap.Modal.getInstance(document.getElementById('deletePhotoModal'));
-        deletePhotoModal.hide();
+        const modal = document.getElementById('deletePhotoModal');
+        const bsModal = bootstrap.Modal.getInstance(modal);
+        bsModal.hide();
     }
 });

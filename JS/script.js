@@ -63,9 +63,10 @@ function isConnected(){
 
 /* Les utilisateurs :
 disconnected 
-connected (admin ou employe)
+connected (admin ou employe ou veterinaire)
     admin
     employe
+    veterinaire
 */
 
 // Cette fonction permet d'afficher et masquer les éléments par rôle

@@ -1,3 +1,10 @@
+
+<div class="hero-scene text-center text-white bg-dark py-5">
+  <div class="hero-scene-content">
+      <h1>Services</h1>
+  </div>
+</div>
+
 <!-- Carousel -->
 <div id="demo" class="carousel slide" data-bs-ride="carousel">
 
@@ -8,7 +15,10 @@
       <button type="button" data-bs-target="#demo" data-bs-slide-to="2"></button>
       <button type="button" data-bs-target="#demo" data-bs-slide-to="3"></button>
     </div>
-    
+    <div class="text-center my-3" data-show="admin">
+      <button type="button" data-bs-toggle="modal" data-bs-target="#joinPhotoModal" class="btn btn-primary">Ajouter des photos</button>
+  </div>
+  
     <!-- The slideshow/carousel -->
     <div class="carousel-inner">
       <div class="carousel-item active">
@@ -16,6 +26,10 @@
         <div class="carousel-caption">
           <h3>Restauration</h3>
           <p>Profitez de notre service de restauration avec des options variées pour tous les goûts.</p>
+          <div class="action-image-buttons" data-show="admin">
+            <button type="button" class="btn btn-outline-light" data-bs-toggle="modal" data-bs-target="#publierPhotoModal"><i class="bi bi-pencil-square"></i></button>
+            <button type="button" class="btn btn-outline-light" data-bs-toggle="modal" data-bs-target="#erasePhotoModal"><i class="bi bi-trash"></i></button>
+          </div>
         </div>
       </div>
       
@@ -26,6 +40,10 @@
         <div class="carousel-caption">
           <h3>Boutique de Souvenirs</h3>
           <p>Ramenez chez vous un souvenir de votre visite avec notre sélection de cadeaux et de souvenirs.</p>
+          <div class="action-image-buttons" data-show="admin">
+            <button type="button" class="btn btn-outline-light" data-bs-toggle="modal" data-bs-target="#publierPhotoModal"><i class="bi bi-pencil-square"></i></button>
+            <button type="button" class="btn btn-outline-light" data-bs-toggle="modal" data-bs-target="#erasePhotoModal"><i class="bi bi-trash"></i></button>
+          </div>
         </div> 
       </div>
 
@@ -34,6 +52,10 @@
         <div class="carousel-caption">
           <h3>Aires de Jeux</h3>
           <p>Les enfants peuvent s'amuser dans nos aires de jeux sécurisées et adaptées à tous les âges.</p>
+          <div class="action-image-buttons" data-show="admin">
+            <button type="button" class="btn btn-outline-light" data-bs-toggle="modal" data-bs-target="#publierPhotoModal"><i class="bi bi-pencil-square"></i></button>
+            <button type="button" class="btn btn-outline-light" data-bs-toggle="modal" data-bs-target="#erasePhotoModal"><i class="bi bi-trash"></i></button>
+          </div>
         </div> 
       </div>
 
@@ -42,6 +64,10 @@
         <div class="carousel-caption">
           <h3>Visites Guidées</h3>
           <p>Participez à une visite guidée pour en savoir plus sur les animaux et les efforts de conservation du zoo.</p>
+          <div class="action-image-buttons" data-show="admin">
+            <button type="button" class="btn btn-outline-light" data-bs-toggle="modal" data-bs-target="#publierPhotoModal"><i class="bi bi-pencil-square"></i></button>
+            <button type="button" class="btn btn-outline-light" data-bs-toggle="modal" data-bs-target="#erasePhotoModal"><i class="bi bi-trash"></i></button>
+          </div>
         </div>  
       </div>
     </div>
@@ -56,6 +82,92 @@
   </div>
   
   <div class="container-fluid mt-3">
-    <h3>Carousel Example</h3>
-    <p>The following example shows how to create a basic carousel with indicators and controls.</p>
+    <h3>Les services proposer par notre ZOO</h3>
+    <p>Venez visiter notre zoo afin de pouvoir découvrir nos différents services, laissé vous transporter dans une aventure inoubliable à travers la visite guidée et ajouter de nouvelle saveur à votre palais</p>
+  </div>
+
+  <!-- Modal d'ajout de service -->
+  <div class="modal fade" id="joinPhotoModal" tabindex="-1" aria-labelledby="joinPhotoModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+              <h5 class="modal-title" id="joinPhotoModalLabel">Ajouter un nouveau service</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+              <form id="joinPhotoForm">
+                  <div class="mb-3">
+                      <label for="joinPhotoTitle" class="form-label">Titre</label>
+                      <input type="text" id="joinPhotoTitle" class="form-control" required>
+                  </div>
+                  <div class="mb-3">
+                      <label for="joinPhotoDescription" class="form-label">Description</label>
+                      <textarea id="joinPhotoDescription" class="form-control" rows="3" required></textarea>
+                  </div>
+                  <div class="mb-3">
+                      <label for="joinPhotoImage" class="form-label">Image</label>
+                      <input type="file" id="joinPhotoImage" class="form-control" required>
+                  </div>
+              </form>
+          </div>
+          <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+              <button type="button" class="btn btn-primary" id="saveJoinPhotoButton">Ajouter</button>
+          </div>
+        </div>
+    </div>
+  </div>
+
+
+  <!-- Modal de modification de service -->
+  <div class="modal fade" id="publierPhotoModal" tabindex="-1" aria-labelledby="publierPhotoModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+          <div class="modal-header">
+              <h5 class="modal-title" id="publierPhotoModalLabel">Modifier le service</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+              <form id="publierPhotoForm">
+                  <div class="mb-3">
+                      <label for="publierPhotoTitle" class="form-label">Titre</label>
+                      <input type="text" id="publierPhotoTitle" class="form-control" required>
+                  </div>
+                  <div class="mb-3">
+                      <label for="publierPhotoDescription" class="form-label">Description</label>
+                      <textarea id="publierPhotoDescription" class="form-control" rows="3" required></textarea>
+                  </div>
+                  <div class="mb-3">
+                      <label for="publierPhotoImage" class="form-label">Image</label>
+                      <input type="file" id="publierPhotoImage" class="form-control">
+                  </div>
+              </form>
+          </div>
+          <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+              <button type="button" class="btn btn-primary" id="savePublierPhotoButton">Sauvegarder</button>
+          </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- Modal de suppression de service -->
+  <div class="modal fade" id="erasePhotoModal" tabindex="-1" aria-labelledby="erasePhotoModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+          <div class="modal-header">
+              <h5 class="modal-title" id="erasePhotoModalLabel">Supprimer le service</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+              <p id="erasePhotoTitle"></p>
+              <img id="erasePhotoImage" src="" alt="Image du service" class="img-fluid">
+          </div>
+          <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+              <button type="button" class="btn btn-danger" id="confirmErasePhotoButton">Supprimer</button>
+          </div>
+      </div>
+    </div>
   </div>

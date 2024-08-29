@@ -2,36 +2,92 @@
     <div class="hero-scene-content">
         <h1>Mon compte</h1>
     </div>
+</div>
+
+<div class="container">
+    <!-- Formulaire de gestion des avis -->
+    <div class="container mt-4" data-show="employe">
+        <h2 class="text-center">Gestion des avis</h2>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Pseudo</th>
+                    <th>Avis</th>
+                    <th>Note</th>
+                    <th>Date</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody id="reviewTableBody">
+                <!-- Les lignes seront ajoutées ici par JavaScript -->
+            </tbody>
+        </table>
     </div>
-        <div class="container">
-            <form>
-                <div class="mb-3">
-                    <label for="NomInput" class="form-label">Nom</label>
-                    <input type="text" class="form-control" id="NomInput" placeholder="Votre nom" name="Nom"> 
-                </div>
-                <div class="mb-3">
-                    <label for="PrenomInput" class="form-label">Prénom</label>
-                    <input type="text" class="form-control" id="PrenomInput" placeholder="Votre prénom" name="Prenom"> 
-                </div>
-                <div class="mb-3">
-                    <label for="AllergieInput" class="form-label">Fonction</label>
-                    <input type="text" class="form-control" id="FonctionInput" placeholder="Fonction" name="Fonction">  
-                </div>
-                <div class="mb-3">
-                    <label for="NbConvivesInput" class="form-label">Nombres de convives habituel</label>
-                    <input type="number" class="form-control" id="NbConvivesInput" placeholder="Combien vous êtes habituellement ?"  value="4" name="NbConvives"> 
-                </div>
-                <div class="text-center">
-                    <button type="submit" class="btn btn-primary">Modifier vos informations</button>
-                    <button type="button" class="btn btn-danger">Supprimer mon compte</button>
-                </div>
-            </form>
+
+    <!-- Formulaire de modification des services du zoo -->
+    <div class="container mt-4" data-show="admin">
+        <h2 class="text-center">Modification des services du zoo</h2>
+        <form id="servicesForm" action="updateServices.php" method="POST">
+            <div class="mb-3">
+                <label for="services" class="form-label">Services du zoo</label>
+                <textarea class="form-control" id="services" name="services" rows="3" placeholder="Décrivez les services du zoo..." required></textarea>
+                <div class="invalid-feedback">Ce champ est obligatoire.</div>
+            </div>
+            <div class="text-center">
+                <button type="submit" class="btn btn-primary">Modifier les services</button>
+            </div>
+        </form>
+    </div>
+
+    <!-- Formulaire d'alimentation des animaux -->
+    <div class="container mt-4" data-show="employe">
+        <h2 class="text-center">Alimentation quotidienne des animaux</h2>
+        <form id="feedingForm" action="updateFeeding.php" method="POST">
+            <div class="mb-3">
+                <label for="animalSelect" class="form-label">Sélectionner un animal</label>
+                <select class="form-select" id="animalSelect" name="animal" required>
+                    <option value="" disabled selected>Choisir un animal</option>
+                    <!-- Les options seront ajoutées ici par JavaScript -->
+                </select>
+                <div class="invalid-feedback">Ce champ est obligatoire.</div>
+            </div>
+            <div class="mb-3">
+                <label for="feedingDate" class="form-label">Date</label>
+                <input type="date" class="form-control" id="feedingDate" name="date" required>
+                <div class="invalid-feedback">Ce champ est obligatoire.</div>
+            </div>
+            <div class="mb-3">
+                <label for="feedingTime" class="form-label">Heure</label>
+                <input type="time" class="form-control" id="feedingTime" name="time" required>
+                <div class="invalid-feedback">Ce champ est obligatoire.</div>
+            </div>
+            <div class="mb-3">
+                <label for="food" class="form-label">Nourriture donnée</label>
+                <input type="text" class="form-control" id="food" name="food" placeholder="Type de nourriture" required>
+                <div class="invalid-feedback">Ce champ est obligatoire.</div>
+            </div>
+            <div class="mb-3">
+                <label for="quantity" class="form-label">Quantité (en grammes)</label>
+                <input type="number" class="form-control" id="quantity" name="quantity" min="0" required>
+                <div class="invalid-feedback">Ce champ est obligatoire.</div>
+            </div>
+            <div class="text-center">
+                <button type="submit" class="btn btn-primary">Ajouter la nourriture</button>
+            </div>
+        </form>
+    </div>
+
+    <!-- Boutons de gestion du compte -->
+    <div class="text-center mt-4">
+        <button type="submit" class="btn btn-primary">Modifier vos informations</button>
+        <button type="button" class="btn btn-danger">Supprimer mon compte</button>
+    </div>
+
     <div class="text-center pt-3">
         <a href="/editPassword">Cliquez ici pour modifier votre mot de passe</a>
     </div>
 
     <div class="text-center pt-3" data-show="admin">
         <a href="/signup">Création de compte</a>
-    </div>
     </div>
 </div>

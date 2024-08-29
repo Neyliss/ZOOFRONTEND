@@ -1,90 +1,63 @@
-
 <div class="hero-scene text-center text-white">
     <div class="hero-scene-content">
         <h1>Savane</h1>
     </div>
 </div>
-
 <div class="container mt-3">
-  <div class="text-center" data-show="admin">
-    <button type="button" data-bs-toggle="modal" data-bs-target="#ajoutPhotoModal" class="btn btn-primary">Ajouter des photos</button>
-</div>
-    <h2 class="text-center">Les animaux de l'habitat Savane </h2>
-    <p class="text-center"> Vaste plaine herbeuse avec des arbres dispersés, où vivent des animaux comme les lions, les éléphants, les girafes ou encore les zèbres.</p>
+    <h2 class="text-center">Les animaux de l'habitat Savane</h2>
+    <p class="text-center">Vaste plaine herbeuse avec des arbres dispersés, où vivent des animaux comme les lions, les éléphants, les girafes ou encore les zèbres.</p>
+    <div id="animal-cards" class="row">
+        <div class="col-md-4 mb-4">
+            <div class="card animal-card" data-animal="Lion" data-prenom="Dark" data-race="Félin" data-habitat="Savane" data-image="/Images/Lion.jpeg">
+                <img src="/Images/Lion.jpeg" class="card-img-top" alt="Lion">
+                <div class="card-body">
+                    <h5 class="card-title">Lion</h5>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 mb-4">
+            <div class="card animal-card" data-animal="Giraffe" data-prenom="Lucie" data-race="Ongulé" data-habitat="Savane" data-image="/Images/Giraffe.jpeg">
+                <img src="/Images/Giraffe.jpeg" class="card-img-top" alt="Girafe">
+                <div class="card-body">
+                    <h5 class="card-title">Girafe</h5>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 mb-4">
+            <div class="card animal-card" data-animal="Elephant" data-prenom="Frank" data-race="Proboscidiens" data-habitat="Savane" data-image="/Images/elephant.jpeg">
+                <img src="/Images/elephant.jpeg" class="card-img-top" alt="Éléphant">
+                <div class="card-body">
+                    <h5 class="card-title">Éléphant</h5>
+                </div>
+            </div>
+        </div>
+    </div>
     <br>
-    <h3>Découvrez nos en animaux</h3>
-    <div id="accordion">
-      <div class="card">
-        <div class="card-header">
-          <a class="btn" data-bs-toggle="collapse" href="#collapseOne">
-            Click pour découvrir cet animal 
-          </a>
-        </div>
-        <div id="collapseOne" class="collapse show" data-bs-parent="#accordion">
-          <div class="card-body">
-            <div class="card" style="width:400px">
-              <img class="card-img-top" src="/Images/Lion.jpeg" alt="Card image">
-              <div class="card-body">
-                <ul class="list-group list-group-flush">
-                  <li class="list-group-item"> <strong> Prénom : </strong>: Dark</li>
-                  <li class="list-group-item"> <strong> Race :</strong> Félin</li>
-                  <li class="list-group-item"> <strong> Habitat :</strong> Savane </li>
-                </ul>
-              </div>
-            </div>         
-        </div>
+    <div class="d-flex justify-content-center">
+        <a href="/habitat" class="btn btn-primary">Habitat</a>
+    </div>
+</div>
+
+<div class="modal fade" id="animalModal" tabindex="-1" aria-labelledby="animalModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="animalModalLabel"></h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
-
-
-
-
-      <div class="card">
-        <div class="card-header">
-          <a class="collapsed btn" data-bs-toggle="collapse" href="#collapseTwo">
-            Click pour découvrir cet animal 
-        </a>
-        </div>
-        <div id="collapseTwo" class="collapse" data-bs-parent="#accordion">
-          <div class="card-body">
-            <div class="card" style="width:400px">
-              <img class="card-img-top" src="/Images/Giraffe.jpeg" alt="Card image">
-              <div class="card-body">
-                <ul class="list-group list-group-flush">
-                  <li class="list-group-item"> <strong> Prénom : </strong>: Lucie</li>
-                  <li class="list-group-item"> <strong> Race :</strong> Ongulé</li>
-                  <li class="list-group-item"> <strong> Habitat :</strong> Savane </li>
-                </ul>
-              </div>
-          </div>
-        </div>
-      </div>
-
-
-      <div class="card">
-        <div class="card-header">
-          <a class="collapsed btn" data-bs-toggle="collapse" href="#collapseThree">
-            Click pour découvrir cet animal 
-          </a>
-        </div>
-        <div id="collapseThree" class="collapse" data-bs-parent="#accordion">
-          <div class="card-body">
-                        <div class="card" style="width:400px">
-              <img class="card-img-top" src="/Images/elephant.jpeg" alt="Card image">
-              <div class="card-body">
-                <ul class="list-group list-group-flush">
-                  <li class="list-group-item"> <strong> Prénom : </strong>: Frank</li>
-                  <li class="list-group-item"> <strong> Race :</strong> Proboscidiens</li>
-                  <li class="list-group-item"> <strong> Habitat :</strong> Savanne</li>
-                </ul>
-              </div>
-          </div>
-        </div>
+      <div class="modal-body">
+        <img src="" id="animalModalImage" class="img-fluid" alt="">
+        <ul class="list-group list-group-flush mt-3">
+            <li class="list-group-item"><strong>Prénom :</strong> <span id="animalModalPrenom"></span></li>
+            <li class="list-group-item"><strong>Race :</strong> <span id="animalModalRace"></span></li>
+            <li class="list-group-item"><strong>Habitat :</strong> <span id="animalModalHabitat"></span></li>
+        </ul>
       </div>
     </div>
   </div>
+</div>
 
-  <br>
-  <br>
-  <div class="d-flex justify-content-center">
-      <a href="/habitat" class="btn btn-primary">Habitat</a>
-  </div>      
+
+
+
+
