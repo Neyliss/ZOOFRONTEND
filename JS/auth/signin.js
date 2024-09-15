@@ -1,7 +1,30 @@
 const MailInput = document.getElementById("EmailInput");
 const PasswordInput = document.getElementById("PasswordInput");
-const btnSignin = document.getElementById("btnSignin");
+const btnSignin = document.getElementById ("btnSignin");
 
+btnSignin.addEventListener("click", checkCredentials);
+
+function checkCredentials (){
+    // information factis 
+    // Ici appeler l'API pour vérifier les Credentials en BDD 
+
+    if(MailInput.value == "admin@mail.com" && PasswordInput.value == "Adminlog456789"){
+        //Il faudra récupérer le vrai token
+        const token = "lkjsdngfljsqdnglkjsdbglkjqskjgkfjgbqslkfdgbskldfgdfgsdgf";
+        setToken(token);
+        //placer ce token en cookie
+
+        setCookie(RoleCookieName, "admin", 7);
+        window.location.replace("/");
+    }
+    else{
+        MailInput.classList.add("is-invalid");
+        PasswordInput.classList.add("is-invalid");
+    }
+}
+
+
+/*
 function setCookie(name, value, days) {
     const d = new Date();
     d.setTime(d.getTime() + (days * 24 * 60 * 60 * 1000));
@@ -37,3 +60,4 @@ btnSignin.addEventListener("click", function() {
         PasswordInput.classList.add("is-invalid");
     });
 });
+*/
