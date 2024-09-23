@@ -10,7 +10,7 @@ const confirmationModal = new bootstrap.Modal(document.getElementById('confirmat
 inputPseudo.addEventListener("input", validateForm);
 inputAvis.addEventListener("input", validateForm);
 ratingInputs.forEach(radio => radio.addEventListener("change", validateForm));
-btnValidation.addEventListener ("click", ValidationAvis);
+btnSubmit.addEventListener ("click", ValidationAvis);
 
 // Fonction permettant de valider tout le formulaire
 function validateForm() {
@@ -59,26 +59,35 @@ document.addEventListener("DOMContentLoaded", function() {
 });
 
 
-function ValidationAvis ()
+function ValidationAvis() {
+    let raw = JSON.stringify({
+        "pseudo": inputPseudo.value,
+        "avis": inputAvis.value,
+        "note": document.querySelector('input[name="rating"]:checked').value // Récupère la note sélectionnée
+    });
 
- {
-    var myHeaders = new Headers();
-myHeaders.append("Content-Type", "application/json");
+    let requestOptions = {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: raw,
+        redirect: 'follow'
+    };
 
-var raw = JSON.stringify({
-  //
-});
-
-var requestOptions = {
-  method: 'POST',
-  headers: myHeaders,
-  body: raw,
-  redirect: 'follow'
-};
-
-fetch("https://127.0.0.1:8000/api/review", requestOptions)
-  .then(response => response.text())
-  .then(result => console.log(result))
-  .catch(error => console.log('error', error));
-
+    fetch("https://127.0.0.1:8000/api/review", requestOptions)
+        .then(response => {
+            if(response.ok){
+            return response.json();
+        }
+            else{
+                alert("Erreur lors de l'inscription");
+        }
+    })
+        .then(result => {
+            console.log(result);
+            confirmationModal.show();
+            document.location.href="/";
+    })
+    .catch(error => console.log('error', error));
 };

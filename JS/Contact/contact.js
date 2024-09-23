@@ -20,7 +20,7 @@ function validateForm() {
     const allFieldsFilled = inputTitre.value.trim() !== '' && inputEmail.value.trim() !== '' && inputDescription.value.trim() !== '';
 
     // Booléen permettant de vérifier si le remplissage des champs est correct
-    btnSubmit.disabled = !(titreOk && emailOk && descriptionOk && allFieldsFilled);
+    btnValidation.disabled = !(titreOk && emailOk && descriptionOk && allFieldsFilled);
 }
 
 // Vérifier la validité de l'adresse mail 
@@ -58,27 +58,39 @@ document.addEventListener("DOMContentLoaded", function() {
 });
 
 // Ajout d'un écouteur d'événement pour la soumission du formulaire
-function ValidationContact ()
-{
-    var myHeaders = new Headers();
-myHeaders.append("Content-Type", "application/json");
+function ValidationContact() {
+    let dataForm = new FormData(contactForm);
 
-var raw = JSON.stringify({
-  "Titre": "Test postman",
-  "pseudo": "test test",
-  "Description": "Je suis content ",
-});
+    let myHeaders = new Headers();
+    myHeaders.append("Content-Type", "application/json");
 
-var requestOptions = {
-  method: 'POST',
-  headers: myHeaders,
-  body: raw,
-  redirect: 'follow'
-};
+    let raw = JSON.stringify({
+        "Titre": dataForm.get("Titre"),
+        "Email": dataForm.get("Email"),
+        "Description": dataForm.get("Description"),
+    });
 
-fetch("https://127.0.0.1:8000/api/contact", requestOptions)
-  .then(response => response.text())
-  .then(result => console.log(result))
-  .catch(error => console.log('error', error));
+    let requestOptions = {
+        method: 'POST',
+        headers: myHeaders,
+        body: raw,
+        redirect: 'follow'
+    };
 
+    fetch("https://127.0.0.1:8000/api/contact", requestOptions)
+    .then(response => {
+        if(response.ok){
+            return response.json();
+        }
+        else{
+            alert("Erreur lors de l'inscription");
+        }
+    })
+    .then(result => {
+        console.log(result);
+        confirmationModal.show();
+        document.location.href="/";
+    })
+    .catch(error => console.log('error', error));
+    
 };

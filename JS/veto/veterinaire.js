@@ -5,7 +5,7 @@ const grammageNourriture = document.getElementById("grammageNourriture");
 const datePassage = document.getElementById("datePassage");
 const detailEtatAnimal = document.getElementById("detailEtatAnimal");
 const btnValidation = document.getElementById("btn-validation-vetForm");
-const form = document.getElementById("vetForm");
+const formVeto = document.getElementById("vetForm");
 const formFeedback = document.getElementById("formFeedback");
 
 // Écouteurs d'événements pour la validation
@@ -32,7 +32,7 @@ function validateForm() {
 // Fonction pour valider les champs obligatoires
 function validateRequired(input) {
     const value = sanitizeInput(input.value.trim());
-    if (value !== "") {
+    if (value !== "" && input.value !== "") {
         input.classList.add("is-valid");
         input.classList.remove("is-invalid");
         return true;
@@ -64,15 +64,20 @@ function sanitizeInput(input) {
     return element.innerHTML;
 }
 
+// Fonction pour soumettre le formulaire
 function RemplirVetform () {
+
+    let dataForm = new FormData(formVeto);
+
     let myHeaders = new Headers();
     myHeaders.append("Content-Type", "application/json");
     
     let raw = JSON.stringify({
-      "firstName": "Test Fetch",
-      "lastName": "test test fetch ",
-      "email": "testdepuisPostman@email.com",
-      "password": "Azerty11"
+      "etatAnimal": dataForm.get("etat_animal"), 
+      "nourriture": dataForm.get("nourriture_proposee"), 
+      "gramme": dataForm.get("grammage_nourriture"), 
+      "date": dataForm.get("date_passage"), 
+      "detail" : dataForm.get("detail_etat_animal"), 
     });
     
     let requestOptions = {
@@ -83,8 +88,17 @@ function RemplirVetform () {
     };
     
     fetch("https://127.0.0.1:8000/api/vet-form", requestOptions)
-      .then(response => response.text())
-      .then(result => console.log(result))
-      .catch(error => console.log('error', error));
-
-}
+    .then(response => {
+        if(response.ok){
+            return response.json();
+        }
+        else{
+            alert("Erreur lors de l'inscription");
+        }
+    })
+    .then(result => {
+        alert("Bravo "+dataForm.get("prenom")+", vous êtes maintenant inscrit, vous pouvez vous connecter.");
+        document.location.href="/veterinaire";
+    })
+    .catch(error => console.log('error', error));
+};
