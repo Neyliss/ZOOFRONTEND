@@ -10,6 +10,7 @@ const confirmationModal = new bootstrap.Modal(document.getElementById('confirmat
 inputPseudo.addEventListener("input", validateForm);
 inputAvis.addEventListener("input", validateForm);
 ratingInputs.forEach(radio => radio.addEventListener("change", validateForm));
+btnValidation.addEventListener ("click", ValidationAvis);
 
 // Fonction permettant de valider tout le formulaire
 function validateForm() {
@@ -57,39 +58,27 @@ document.addEventListener("DOMContentLoaded", function() {
     validateForm();
 });
 
-// Ajout d'un écouteur d'événement pour la soumission du formulaire
-reviewForm.addEventListener("submit", function(event) {
-    event.preventDefault(); // Empêcher la soumission réelle du formulaire
 
-    // Construire les données à envoyer
-    const reviewData = {
-        pseudo: inputPseudo.value,
-        avis: inputAvis.value,
-        rating: Array.from(ratingInputs).find(input => input.checked).value
-    };
+function ValidationAvis ()
 
-    // Envoyer les données au backend via une requête POST
-    fetch('/api/review', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(reviewData)
-    })
-    .then(response => {
-        if (response.ok) {
-            confirmationModal.show(); // Afficher la modale de confirmation
-        } else {
-            return response.json().then(data => {
-                // Afficher les erreurs si la réponse n'est pas correcte
-                console.error('Error:', data.errors);
-            });
-        }
-    })
-    .catch(error => console.error('Fetch error:', error));
+ {
+    var myHeaders = new Headers();
+myHeaders.append("Content-Type", "application/json");
 
-    // Redirection après la fermeture de la modale
-    confirmationModal._element.addEventListener('hidden.bs.modal', function () {
-        window.location.href = '/'; // Remplacer par l'URL de la page d'accueil
-    }, { once: true });
+var raw = JSON.stringify({
+  //
 });
+
+var requestOptions = {
+  method: 'POST',
+  headers: myHeaders,
+  body: raw,
+  redirect: 'follow'
+};
+
+fetch("https://127.0.0.1:8000/api/review", requestOptions)
+  .then(response => response.text())
+  .then(result => console.log(result))
+  .catch(error => console.log('error', error));
+
+};

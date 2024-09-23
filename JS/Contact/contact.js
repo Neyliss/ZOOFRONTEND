@@ -2,7 +2,7 @@
 const inputTitre = document.getElementById("TitreInput");
 const inputEmail = document.getElementById("EmailInput");
 const inputDescription = document.getElementById("DescriptionInput");
-const btnSubmit = document.querySelector("button[type='submit']");
+const btnValidation = document.getElementById("btn-validation-contact");
 const contactForm = document.getElementById("contactForm");
 const confirmationModal = new bootstrap.Modal(document.getElementById('confirmationModal'));
 
@@ -10,6 +10,7 @@ const confirmationModal = new bootstrap.Modal(document.getElementById('confirmat
 inputTitre.addEventListener("input", validateForm);
 inputEmail.addEventListener("input", validateForm);
 inputDescription.addEventListener("input", validateForm);
+btnValidation.addEventListener("click", ValidationContact);
 
 // Fonction permettant de valider tout le formulaire
 function validateForm() {
@@ -57,35 +58,27 @@ document.addEventListener("DOMContentLoaded", function() {
 });
 
 // Ajout d'un écouteur d'événement pour la soumission du formulaire
-contactForm.addEventListener("submit", async function(event) {
-    event.preventDefault(); // Empêcher la soumission réelle du formulaire
+function ValidationContact ()
+{
+    var myHeaders = new Headers();
+myHeaders.append("Content-Type", "application/json");
 
-    const formData = {
-        Titre: inputTitre.value.trim(),
-        Email: inputEmail.value.trim(),
-        Description: inputDescription.value.trim(),
-    };
-
-    try {
-        const response = await fetch('http://localhost:8000/api/contact', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(formData),
-        });
-
-        const result = await response.json();
-
-        if (response.ok) {
-            confirmationModal.show(); // Afficher la modale de confirmation
-            confirmationModal._element.addEventListener('hidden.bs.modal', function () {
-                window.location.href = '/'; // Remplacer par l'URL de la page d'accueil
-            }, { once: true });
-        } else {
-            console.error('Erreur:', result.errors);
-        }
-    } catch (error) {
-        console.error('Erreur:', error);
-    }
+var raw = JSON.stringify({
+  "Titre": "Test postman",
+  "pseudo": "test test",
+  "Description": "Je suis content ",
 });
+
+var requestOptions = {
+  method: 'POST',
+  headers: myHeaders,
+  body: raw,
+  redirect: 'follow'
+};
+
+fetch("https://127.0.0.1:8000/api/contact", requestOptions)
+  .then(response => response.text())
+  .then(result => console.log(result))
+  .catch(error => console.log('error', error));
+
+};

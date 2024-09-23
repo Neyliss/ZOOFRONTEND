@@ -13,6 +13,7 @@ etatAnimal.addEventListener("change", validateForm);
 nourritureProposee.addEventListener("input", validateForm);
 grammageNourriture.addEventListener("input", validateForm);
 datePassage.addEventListener("input", validateForm);
+btnValidation.addEventListener("click", RemplirVetform);
 
 // Fonction de validation du formulaire
 function validateForm() {
@@ -63,89 +64,27 @@ function sanitizeInput(input) {
     return element.innerHTML;
 }
 
-// Gestion de l'envoi du formulaire
-form.addEventListener("submit", function(event) {
-    event.preventDefault();
-    if (!btnValidation.disabled) {
-        // Logique d'envoi du formulaire sécurisé
-        const formData = {
-            etatAnimal: sanitizeInput(etatAnimal.value),
-            nourritureProposee: sanitizeInput(nourritureProposee.value),
-            grammageNourriture: sanitizeInput(grammageNourriture.value),
-            datePassage: sanitizeInput(datePassage.value),
-            detailEtatAnimal: sanitizeInput(detailEtatAnimal.value)
-        };
-        
-        // Simulation de l'envoi des données au serveur
-        console.log("Données du formulaire:", formData);
+function RemplirVetform () {
+    let myHeaders = new Headers();
+    myHeaders.append("Content-Type", "application/json");
+    
+    let raw = JSON.stringify({
+      "firstName": "Test Fetch",
+      "lastName": "test test fetch ",
+      "email": "testdepuisPostman@email.com",
+      "password": "Azerty11"
+    });
+    
+    let requestOptions = {
+      method: 'POST',
+      headers: myHeaders,
+      body: raw,
+      redirect: 'follow'
+    };
+    
+    fetch("https://127.0.0.1:8000/api/vet-form", requestOptions)
+      .then(response => response.text())
+      .then(result => console.log(result))
+      .catch(error => console.log('error', error));
 
-        // Effacer le contenu de formFeedback pour éviter l'accumulation des tableaux de bord
-        formFeedback.innerHTML = "";
-
-        // Afficher un tableau de bord après la soumission
-        displayDashboard(formData);
-
-        formFeedback.innerHTML += "<div class='alert alert-success mt-3'>Formulaire envoyé avec succès !</div>";
-        form.reset();
-        btnValidation.disabled = true;
-    } else {
-        formFeedback.innerHTML = "<div class='alert alert-danger'>Veuillez remplir tous les champs obligatoires correctement.</div>";
-    }
-});
-
-// Fonction pour afficher un tableau de bord après la soumission
-function displayDashboard(data) {
-    const dashboard = document.createElement('div');
-    dashboard.className = 'dashboard mt-4';
-    dashboard.innerHTML = `
-        <h3>Tableau de bord</h3>
-        <p><strong>État de l'animal:</strong> ${data.etatAnimal}</p>
-        <p><strong>Nourriture proposée:</strong> ${data.nourritureProposee}</p>
-        <p><strong>Grammage de la nourriture:</strong> ${data.grammageNourriture} g</p>
-        <p><strong>Date de passage:</strong> ${data.datePassage}</p>
-        <p><strong>Détail de l'état de l'animal:</strong> ${data.detailEtatAnimal}</p>
-    `;
-    formFeedback.appendChild(dashboard);
 }
-
-
-// JS pour l'envoi du formulaire à vérifier avant teste 
-form.addEventListener("submit", function(event) {
-    event.preventDefault();
-    if (!btnValidation.disabled) {
-        const formData = {
-            etatAnimal: etatAnimal.value,
-            nourritureProposee: nourritureProposee.value,
-            grammageNourriture: grammageNourriture.value,
-            datePassage: datePassage.value,
-            detailEtatAnimal: detailEtatAnimal.value,
-            animalName: animalNameInput.value
-        };
-
-        fetch('/api/vet-form', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'Accept': 'application/json'
-            },
-            body: JSON.stringify(formData)
-        })
-        .then(response => response.json())
-        .then(data => {
-            if (data.success) {
-                alert("Formulaire envoyé avec succès !");
-                formFeedback.innerHTML = "<div class='alert alert-success'>Formulaire envoyé avec succès !</div>";
-                form.reset();
-                btnValidation.disabled = true;
-            } else {
-                formFeedback.innerHTML = "<div class='alert alert-danger'>Une erreur est survenue. Veuillez réessayer.</div>";
-            }
-        })
-        .catch(error => {
-            console.error('Erreur:', error);
-            formFeedback.innerHTML = "<div class='alert alert-danger'>Une erreur est survenue. Veuillez réessayer.</div>";
-        });
-    } else {
-        formFeedback.innerHTML = "<div class='alert alert-danger'>Veuillez remplir tous les champs obligatoires correctement.</div>";
-    }
-});

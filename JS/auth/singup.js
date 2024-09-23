@@ -15,6 +15,7 @@ inputMail.addEventListener("keyup", validateForm);
 inputPassword.addEventListener("keyup", validateForm);
 inputValidationPassword.addEventListener("keyup", validateForm);
 selectAccountType.addEventListener("change", validateForm);
+btnValidation.addEventListener("click", InscrireUser);
 
 // Fonction permettant de valider tout le formulaire
 function validateForm() {
@@ -92,11 +93,29 @@ function validateRequired(input) {
 }
 
 // Gestion de l'envoi du formulaire
-form.addEventListener("submit", function(event) {
-    event.preventDefault();
-    if (btnValidation.disabled === false) {
-        // Logique d'envoi du formulaire
-        alert("Formulaire envoyé avec succès !");
-        // Ici, vous pouvez ajouter la logique pour envoyer les données au serveur
-    }
-});
+function InscrireUser()
+ {
+    let myHeaders = new Headers();
+    myHeaders.append("Content-Type", "application/json");
+    
+    let raw = JSON.stringify({
+      "firstName": "Test postman",
+      "lastName": "test postman",
+      "email": "testdepuisPostman@email.com",
+      "password": "Azerty11",
+      "Accountype" : "Employe"
+    });
+    
+    let requestOptions = {
+      method: 'POST',
+      headers: myHeaders,
+      body: raw,
+      redirect: 'follow'
+    };
+    
+    fetch("https://127.0.0.1:8000/api/registration", requestOptions)
+      .then(response => response.text())
+      .then(result => console.log(result))
+      .catch(error => console.log('error', error));
+
+};
