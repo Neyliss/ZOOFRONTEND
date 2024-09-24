@@ -83,7 +83,7 @@ function ValidationContact() {
             return response.json();
         }
         else{
-            alert("Erreur lors de l'inscription");
+            alert("Erreur lors de l'envoi de la demande");
         }
     })
     .then(result => {
@@ -92,5 +92,5 @@ function ValidationContact() {
         document.location.href="/";
     })
     .catch(error => console.log('error', error));
-    
+
 };

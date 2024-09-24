@@ -60,10 +60,14 @@ document.addEventListener("DOMContentLoaded", function() {
 
 
 function ValidationAvis() {
+    let dataForm = new FormData(reviewForm);
+    let myHeaders = new Headers();
+    myHeaders.append("Content-Type", "application/json");
+
     let raw = JSON.stringify({
-        "pseudo": inputPseudo.value,
-        "avis": inputAvis.value,
-        "note": document.querySelector('input[name="rating"]:checked').value // Récupère la note sélectionnée
+        "pseudo": dataForm.get("Sseudo"),
+        "avis": dataForm.get("Avis"),
+        "note": dataForm.get(document.querySelector('input[name="rating"]:checked').value), 
     });
 
     let requestOptions = {
