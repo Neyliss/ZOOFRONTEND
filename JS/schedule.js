@@ -3,13 +3,67 @@ document.addEventListener('DOMContentLoaded', function () {
     const addScheduleForm = document.getElementById('addScheduleForm');
     const displayedSchedule = document.getElementById('displayedSchedule');
 
-    // Dummy data for demonstration
-    let schedules = [
-        { id: 1, day: 'Lundi', hours: '12:00-14:00' },
-        { id: 2, day: 'Mardi', hours: '18:00-23:00' }
-    ];
+    // Fonction pour récupérer les horaires depuis l'API
+    function fetchSchedules() {
+        fetch("https://127.0.0.1:8000/api/schedules/list")
+            .then(response => response.json())
+            .then(data => {
+                schedules = data;  // Mettre à jour les horaires
+                renderSchedules();
+            })
+            .catch(error => console.log('Erreur lors du fetch des horaires:', error));
+    }
 
-    // Function to render schedule list
+    // Fonction pour envoyer un nouvel horaire à l'API
+    function createSchedule(newSchedule) {
+        let requestOptions = {
+            method: 'POST',
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(newSchedule)
+        };
+
+        fetch("https://127.0.0.1:8000/api/schedules/create", requestOptions)
+            .then(response => response.json())
+            .then(result => {
+                console.log(result);
+                fetchSchedules();  // Rafraîchir la liste après ajout
+            })
+            .catch(error => console.log('Erreur lors de la création de l\'horaire:', error));
+    }
+
+    // Fonction pour modifier un horaire
+    function updateSchedule(id, updatedSchedule) {
+        let requestOptions = {
+            method: 'PUT',
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(updatedSchedule)
+        };
+
+        fetch(`https://127.0.0.1:8000/api/schedules/maj/${id}`, requestOptions)
+            .then(response => response.json())
+            .then(result => {
+                console.log(result);
+                fetchSchedules();  // Rafraîchir la liste après modification
+            })
+            .catch(error => console.log('Erreur lors de la mise à jour de l\'horaire:', error));
+    }
+
+    // Fonction pour supprimer un horaire
+    function deleteSchedule(id) {
+        let requestOptions = {
+            method: 'DELETE',
+        };
+
+        fetch(`https://127.0.0.1:8000/api/schedules/delete/${id}`, requestOptions)
+            .then(response => response.json())
+            .then(result => {
+                console.log(result);
+                fetchSchedules();  // Rafraîchir la liste après suppression
+            })
+            .catch(error => console.log('Erreur lors de la suppression de l\'horaire:', error));
+    }
+
+    // Fonction pour rendre la liste des horaires
     function renderSchedules() {
         scheduleList.innerHTML = '';
         schedules.forEach(schedule => {
@@ -28,47 +82,46 @@ document.addEventListener('DOMContentLoaded', function () {
         updateDisplayedSchedule();
     }
 
-    // Function to update displayed schedule
+    // Fonction pour mettre à jour l'affichage des horaires
     function updateDisplayedSchedule() {
         displayedSchedule.innerHTML = schedules.map(schedule => `${escapeHTML(schedule.day)} : ${escapeHTML(schedule.hours)}`).join('<br>');
     }
 
-    // Add schedule
+    // Ajout d'un nouvel horaire
     addScheduleForm.addEventListener('submit', function (e) {
         e.preventDefault();
         const day = addScheduleForm.day.value.trim();
         const hours = addScheduleForm.hours.value.trim();
         if (day && hours) {
-            const newSchedule = { id: Date.now(), day, hours };
-            schedules.push(newSchedule);
-            renderSchedules();
+            const newSchedule = { day, hours };
+            createSchedule(newSchedule);
             addScheduleForm.reset();
         } else {
             alert("Tous les champs sont requis.");
         }
     });
 
-    // Edit schedule
+    // Modifier un horaire
     function editSchedule(id) {
         const schedule = schedules.find(s => s.id === id);
         const newDay = prompt('Modifier le jour:', schedule.day);
         const newHours = prompt('Modifier les heures:', schedule.hours);
         if (newDay && newHours) {
-            schedule.day = newDay.trim();
-            schedule.hours = newHours.trim();
-            renderSchedules();
+            const updatedSchedule = { day: newDay.trim(), hours: newHours.trim() };
+            updateSchedule(id, updatedSchedule);
         } else {
             alert("Tous les champs sont requis.");
         }
     }
 
-    // Delete schedule
-    function deleteSchedule(id) {
-        schedules = schedules.filter(s => s.id !== id);
-        renderSchedules();
+    // Supprimer un horaire
+    function deleteScheduleHandler(id) {
+        if (confirm("Êtes-vous sûr de vouloir supprimer cet horaire?")) {
+            deleteSchedule(id);
+        }
     }
 
-    // Attach event listeners to buttons
+    // Ajout des écouteurs d'événements aux boutons
     function attachEventListeners() {
         document.querySelectorAll('.edit-btn').forEach(button => {
             button.addEventListener('click', function () {
@@ -79,14 +132,12 @@ document.addEventListener('DOMContentLoaded', function () {
         document.querySelectorAll('.delete-btn').forEach(button => {
             button.addEventListener('click', function () {
                 const id = parseInt(this.getAttribute('data-id'), 10);
-                if (confirm("Êtes-vous sûr de vouloir supprimer cet horaire?")) {
-                    deleteSchedule(id);
-                }
+                deleteScheduleHandler(id);
             });
         });
     }
 
-    // Escape HTML to prevent XSS
+    // Fonction pour éviter les attaques XSS
     function escapeHTML(str) {
         return str.replace(/[&<>"']/g, function (match) {
             const escapeChars = {
@@ -100,6 +151,6 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
-    // Initial rendering of schedules
-    renderSchedules();
+    // Chargement initial des horaires
+    fetchSchedules();
 });
