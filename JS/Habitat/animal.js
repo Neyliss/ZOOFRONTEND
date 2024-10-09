@@ -1,6 +1,6 @@
 $(document).ready(function() {
     // Récupérer les données des animaux depuis l'API
-    $.get('/api/animals', function(data) {
+    $.get('/api/animal', function(data) {
         data.forEach(function(animal) {
             var animalCard = $('.animal-card[data-animal="' + animal.name + '"]');
             animalCard.data('id', animal.id);
@@ -27,7 +27,7 @@ $(document).ready(function() {
         $('#animalModalImage').attr('src', image);
 
         // Mise à jour du compteur de vues via l'API
-        $.post('/api/animals/' + animalId + '/increment-view', function() {
+        $.post('/api/animal/' + animalId + '/increment-view', function() {
             var currentViews = parseInt($('#animalModalViews').text()) || 0;
             $('#animalModalViews').text(currentViews + 1);
         });

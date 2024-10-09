@@ -77,7 +77,7 @@ function ValidationContact() {
         redirect: 'follow'
     };
 
-    fetch("https://127.0.0.1:8000/api/contact", requestOptions)
+    fetch("http://127.0.0.1:8000/api/contactcreate", requestOptions)
     .then(response => {
         if(response.ok){
             return response.json();

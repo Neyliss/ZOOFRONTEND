@@ -7,7 +7,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // Charger les habitats depuis le serveur
-    fetch('/api/habitats')
+    fetch('/api/habitat')
         .then(response => {
             if (!response.ok) throw new Error('Erreur lors du chargement des habitats.');
             return response.json();
@@ -154,7 +154,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Créer un nouvel habitat via l'API
     function createNewHabitat(title, imageData) {
-        fetch('/api/habitats', {
+        fetch('/api/habitat', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -180,7 +180,7 @@ document.addEventListener('DOMContentLoaded', () => {
             body.image_path = imageData;
         }
 
-        fetch(`/api/habitats/${id}`, {
+        fetch(`/api/habitat/${id}`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json'
@@ -194,7 +194,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Supprimer un habitat via l'API
     function deleteHabitat(id) {
-        return fetch(`/api/habitats/${id}`, {
+        return fetch(`/api/habitat/${id}`, {
             method: 'DELETE'
         }).then(response => {
             if (!response.ok) throw new Error('Erreur lors de la suppression de l\'habitat.');

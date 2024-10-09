@@ -5,7 +5,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Fonction pour récupérer les horaires depuis l'API
     function fetchSchedules() {
-        fetch("https://127.0.0.1:8000/api/schedules/list")
+        fetch("http://127.0.0.1:8000/api/schedules/list")
             .then(response => response.json())
             .then(data => {
                 schedules = data;  // Mettre à jour les horaires
@@ -22,7 +22,7 @@ document.addEventListener('DOMContentLoaded', function () {
             body: JSON.stringify(newSchedule)
         };
 
-        fetch("https://127.0.0.1:8000/api/schedules/create", requestOptions)
+        fetch("http://127.0.0.1:8000/api/schedules/create", requestOptions)
             .then(response => response.json())
             .then(result => {
                 console.log(result);
@@ -39,7 +39,7 @@ document.addEventListener('DOMContentLoaded', function () {
             body: JSON.stringify(updatedSchedule)
         };
 
-        fetch(`https://127.0.0.1:8000/api/schedules/maj/${id}`, requestOptions)
+        fetch(`http://127.0.0.1:8000/api/schedules/maj/${id}`, requestOptions)
             .then(response => response.json())
             .then(result => {
                 console.log(result);
@@ -54,7 +54,7 @@ document.addEventListener('DOMContentLoaded', function () {
             method: 'DELETE',
         };
 
-        fetch(`https://127.0.0.1:8000/api/schedules/delete/${id}`, requestOptions)
+        fetch(`http://127.0.0.1:8000/api/schedules/delete/${id}`, requestOptions)
             .then(response => response.json())
             .then(result => {
                 console.log(result);
